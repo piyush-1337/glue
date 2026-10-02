@@ -1,0 +1,12 @@
+CompileFlags:
+  CompilationDatabase: build
+  Add:
+    - "-std=c++26"
+    - "-stdlib=libc++"
+    - "-Wno-reserved-module-identifier"
+
+InlayHints:
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+  Designators: true
