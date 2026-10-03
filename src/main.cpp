@@ -1,7 +1,12 @@
 import std;
-import glue.log;
+import glue;
 
-int main() {
+auto main(int argc, char* argv[]) -> int {
+  auto config = glue::cli::parse(argc, argv);
+  if (!config) {
+    return config.error();
+  }
 
-  glue::log(); 
+  std::println("cmd: {}, target: {}, file: {}", config->cmd, config->target,
+               config->path.string());
 }

@@ -24,9 +24,27 @@ if(DEFINED ENV{GLIBC_INCLUDE_DIR})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -idirafter $ENV{GLIBC_INCLUDE_DIR}")
 endif()
 
+include(FetchContent)
+set(CLI11_MODULES ON CACHE BOOL "Enable C++20 module support for CLI11" FORCE)
+set(CLI11_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(CLI11_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(CLI11_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    cli11
+    QUIET
+    GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+    GIT_TAG v2.7.2
+)
+ 
+FetchContent_MakeAvailable(cli11)
+
 add_executable(glue src/main.cpp)
+target_link_libraries(glue PRIVATE CLI11::Module)
+
 target_sources(glue
   PUBLIC
     FILE_SET CXX_MODULES FILES
-      src/log.cppm
+      src/cli.cppm
+      src/glue.cppm
 )

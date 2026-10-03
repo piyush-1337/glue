@@ -23,6 +23,8 @@
 
           llvm.clang-tools
           pkgs.neocmakelsp
+
+          pkgs.cli11
         ];
 
         hardeningDisable = [ "all" ];
