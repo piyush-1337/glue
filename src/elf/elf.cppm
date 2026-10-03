@@ -19,4 +19,12 @@ auto parse_header(const std::span<const std::byte> data)
   return header;
 }
 
+auto parse_section_header(const std::span<const std::byte> data, std::size_t& offset) -> std::optional<SectionHeader> {
+  auto section_header = SectionHeader{};
+  std::memcpy(&section_header, data.data() + offset, sizeof(SectionHeader));
+  offset += sizeof(SectionHeader);
+
+  return section_header;
+}
+
 }  // namespace glue::elf
