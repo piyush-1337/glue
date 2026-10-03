@@ -31,7 +31,7 @@
 
         CC = "clang";
         CXX = "clang++";
-        CXXFLAGS = "-std=c++23 -stdlib=libc++";
+        CXXFLAGS = "-std=c++26 -stdlib=libc++";
         LDFLAGS = "-fuse-ld=lld -stdlib=libc++ -lc++abi -Wl,-rpath,${llvm.libcxx}/lib";
         LIBCXX_MODULES_JSON = "${llvm.libcxx}/lib/libc++.modules.json";
         LIBCXX_INCLUDE_DIR = "${llvm.libcxx.dev}/include";

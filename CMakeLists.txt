@@ -47,4 +47,9 @@ target_sources(glue
     FILE_SET CXX_MODULES FILES
       src/cli.cppm
       src/glue.cppm
+      src/file.cppm
+      src/commands/commands.cppm
+      src/commands/inspect.cppm
+      src/elf/elf.cppm
+      src/elf/types.cppm
 )

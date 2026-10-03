@@ -7,6 +7,11 @@ auto main(int argc, char* argv[]) -> int {
     return config.error();
   }
 
-  std::println("cmd: {}, target: {}, file: {}", config->cmd, config->target,
-               config->path.string());
+  auto file = glue::file::open(config->path);
+  if (!file) {
+    std::println("{}", file.error());
+    return 1;
+  }
+
+  glue::commands::execute(file->data(), *config);
 }
