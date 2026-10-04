@@ -23,7 +23,8 @@ auto inspect(std::span<const std::byte> data, cli::Target target) {
           return;
         }
 
-        std::println("section number: {}, type: {}", i + 1,
+        std::println("section number: {}, name: {}, type: {}", i + 1,
+                     elf::parse_section_name(data, *elf_header, section_header->name),
                      section_header->type);
       }
       break;

@@ -19,12 +19,28 @@ auto parse_header(const std::span<const std::byte> data)
   return header;
 }
 
-auto parse_section_header(const std::span<const std::byte> data, std::size_t& offset) -> std::optional<SectionHeader> {
+auto parse_section_header(const std::span<const std::byte> data,
+                          std::size_t& offset) -> std::optional<SectionHeader> {
   auto section_header = SectionHeader{};
   std::memcpy(&section_header, data.data() + offset, sizeof(SectionHeader));
   offset += sizeof(SectionHeader);
 
   return section_header;
+}
+
+auto parse_section_name(const std::span<const std::byte> data,
+                        ElfHeader& elf_header, ElfWord name)
+    -> std::string_view {
+  // offset into the string table section header
+  auto offset = std::size_t{elf_header.sh_off +
+                            (elf_header.snstidx * sizeof(SectionHeader))};
+  auto section_header = SectionHeader{};
+  std::memcpy(&section_header, data.data() + offset, sizeof(SectionHeader));
+
+  // absolute offset of the contents of this header in file
+  offset = section_header.offset + name;
+
+  return std::string_view{reinterpret_cast<const char*>(data.data() + offset)};
 }
 
 }  // namespace glue::elf
