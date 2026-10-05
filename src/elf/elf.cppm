@@ -43,4 +43,10 @@ auto parse_section_name(const std::span<const std::byte> data,
   return std::string_view{reinterpret_cast<const char*>(data.data() + offset)};
 }
 
+auto parse_section_data(const std::span<const std::byte> data,
+                        const SectionHeader& section_header) -> std::string_view {
+  auto offset = std::size_t{section_header.offset};
+  return {reinterpret_cast<const char*>(data.data() + offset), section_header.size};
+}
+
 }  // namespace glue::elf
