@@ -19,6 +19,7 @@ struct CliConfig {
   Command cmd = Command::NONE;
   Target target = Target::NONE;
   std::filesystem::path path = "";
+  std::string section_name;
 };
 
 auto parse(int argc, char* argv[]) -> std::expected<CliConfig, int> {
@@ -38,6 +39,8 @@ auto parse(int argc, char* argv[]) -> std::expected<CliConfig, int> {
       ->required()
       ->check(CLI::ExistingFile);
 
+  elf->add_option("-s,--section", config.section_name, "Data for section");
+
   try {
     app.parse(argc, argv);
   } catch (const CLI::ParseError& e) {
@@ -48,41 +51,3 @@ auto parse(int argc, char* argv[]) -> std::expected<CliConfig, int> {
 }
 
 }  // namespace glue::cli
-
-namespace std {
-
-using namespace glue::cli;
-
-template <>
-struct std::formatter<Command> : std::formatter<std::string_view> {
-  auto format(Command cmd, std::format_context& ctx) const {
-    std::string_view name = "UNKNOWN";
-    switch (cmd) {
-      case Command::INSPECT:
-        name = "INSPECT";
-        break;
-      case Command::NONE:
-        name = "NONE";
-        break;
-    }
-    return std::formatter<std::string_view>::format(name, ctx);
-  }
-};
-
-template <>
-struct std::formatter<Target> : std::formatter<std::string_view> {
-  auto format(Target target, std::format_context& ctx) const {
-    std::string_view name = "UNKNOWN";
-    switch (target) {
-      case Target::ELF:
-        name = "ELF";
-        break;
-      case Target::NONE:
-        name = "NONE";
-        break;
-    }
-    return std::formatter<std::string_view>::format(name, ctx);
-  }
-};
-
-}  // namespace std

@@ -39,7 +39,10 @@ FetchContent_Declare(
  
 FetchContent_MakeAvailable(cli11)
 
-add_executable(glue src/main.cpp)
+add_executable(glue 
+  src/main.cpp
+  src/elf/elf.cpp
+)
 target_link_libraries(glue PRIVATE CLI11::Module)
 
 target_sources(glue

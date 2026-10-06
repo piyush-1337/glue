@@ -13,5 +13,5 @@ auto main(int argc, char* argv[]) -> int {
     return 1;
   }
 
-  glue::commands::execute(file->data(), *config);
+  return glue::commands::execute(file->data(), *config);
 }
